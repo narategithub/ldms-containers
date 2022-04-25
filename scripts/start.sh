@@ -71,7 +71,7 @@ LOG "Starting ldmsd"
 ldmsd-start
 
 LOG "start routine done, pending init process ..."
-} | tee /var/log/start.log
+} 2>&1 | tee /var/log/start.log
 
 # This script is the `init` process in the container
 tail -f /dev/null

@@ -3,7 +3,7 @@
 set -e
 
 DIRS=(
-	ldms-base ldms-samp ldms-agg
+	ldms-base ldms-samp ldms-agg ldms-ui
 )
 
 DOCKER_BUILD=docker-build.sh
