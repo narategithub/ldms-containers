@@ -32,6 +32,8 @@ OPTIONS=(
 	--with-sos=/opt/ovis
 )
 
+PREFIX_UI=/opt/ovis/ui
+
 { cat <<EOF
 set -e
 set -x
@@ -48,9 +50,34 @@ git remote add github https://github.com/nick-enoent/numsos
 git fetch github ${NUMSOS_REV}
 git checkout FETCH_HEAD
 ./autogen.sh
-mkdir build
+mkdir -p build
 pushd build
 ../configure ${OPTIONS[@]} PYTHON=python3 CFLAGS="${CFLAGS[*]}"
+make
+make install
+popd
+popd
+
+
+#### sosdb-ui ####
+git clone https://github.com/nick-enoent/sosdb-ui
+pushd sosdb-ui
+./autogen.sh
+mkdir -p build
+pushd build
+../configure --prefix ${PREFIX_UI}
+make
+make install
+popd
+popd
+
+#### sosdb-grafana ####
+git clone https://github.com/nick-enoent/sosdb-grafana
+pushd sosdb-grafana
+./autogen.sh
+mkdir -p build
+pushd build
+../configure --prefix ${PREFIX_UI}
 make
 make install
 popd
@@ -60,4 +87,5 @@ chown ${UID}:${UID} -R /opt/ovis
 EOF
 } | docker run -i --rm --name ldms-ui-build --hostname ldms-ui-build \
 	-v $(realpath ${ODIR}):/opt/ovis \
+	-v ${PWD}/build.sh:/build.sh \
 	${IMG} "/bin/bash"
