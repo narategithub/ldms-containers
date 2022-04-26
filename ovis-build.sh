@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LIST=( ldms-samp ldms-agg )
+LIST=( ldms-samp ldms-agg ldms-ui )
 
 for D in "${LIST[@]}"; do
 	pushd $D

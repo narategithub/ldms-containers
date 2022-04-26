@@ -23,7 +23,7 @@ RUN set -e ; \
     echo "from sosdb_auth.models import SosdbUser; SosdbUser.objects.create_superuser('admin', 'root@localhost', 'admin')" \
     | python3 manage.py shell ;
 
-RUN chown apache:apache -R /opt/ovis/ui/
+RUN chown apache:apache -R /opt/ovis/ui/ /var/log/sosgui/
 
 COPY --chown=root:root scripts-ui/start-ui.sh /docker/
 

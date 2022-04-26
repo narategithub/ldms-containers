@@ -151,6 +151,7 @@ STATICFILES_DIRS = [
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SOS_ROOT = "/store"
+DSOS_CONF = "/opt/ovis/etc/dsosd.conf"
 LOG_FILE = "/var/log/sosgui/sosgui.log"
 LOG_DATE_FMT = "%F %T"
 ODS_LOG_FILE = "/var/log/sosgui/ods.log"
