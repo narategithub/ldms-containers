@@ -2,6 +2,8 @@
 
 set -e
 
+. /opt/ovis/etc/profile.d/set-ovis-variables.sh
+
 LOG() {
 	echo $(date +"%F %T") "$@"
 }
@@ -36,6 +38,9 @@ for E in "${DSOSD_LIST[@]}"; do
 done
 )
 EOF
+
+LOG "Starting httpd..."
+httpd
 
 } 2>&1 | tee /var/log/start-ui.log
 
