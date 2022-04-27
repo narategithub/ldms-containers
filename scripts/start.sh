@@ -70,6 +70,39 @@ fi
 LOG "Starting ldmsd"
 ldmsd-start
 
+# sos-part chmod routine
+CONT_LIST=( "${STRGP_LIST[@]}" )
+N=${#CONT_LIST[@]}
+LOG "N: ${N}"
+LOG "CONT_LIST: ${CONT_LIST[@]}"
+if (( ${N} )); then
+	LOG "Set SOS partition mode (permission) ..."
+	while (( ${N} )); do
+		sleep 1
+		for (( I=0; I < ${#CONT_LIST[@]}; I++)); do
+			CONT="${CONT_LIST[$I]}"
+			LOG "working on CONT: ${CONT}"
+			[[ -n "$CONT" ]] || continue # already done
+			PART_LIST=( ${STORE_PATH}/${CONT}/*/ )
+			LOG "PART_LIST: ${PART_LIST[@]}"
+			(( ${#PART_LIST[@]} >= 2 )) || continue # not ready
+			ERR=0
+			for PART in "${PART_LIST[@]}"; do
+				LOG "  ... partition: ${PART}"
+				# NOTE: apache@ui cannot read data with mode 0o664
+				sos-part --path ${PART} --set --mode 0o666
+				ERR=$?
+				(( $ERR == 0 )) || break
+			done
+			(( $ERR == 0 )) || continue
+			# successfully modify partitions' mode
+			N=$((N-1))
+			CONT_LIST[$I]=
+		done
+	done
+	LOG "partition mode set ... DONE"
+fi
+
 LOG "start routine done, pending init process ..."
 } 2>&1 | tee /var/log/start.log
 
