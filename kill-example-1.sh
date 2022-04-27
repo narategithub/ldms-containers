@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker kill samp-{01..8} agg-1{1..4} agg-2{1,2} ui
+docker kill samp-{01..8} agg-1{1..4} agg-2{1,2} ui grafana

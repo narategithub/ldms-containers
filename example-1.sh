@@ -13,3 +13,5 @@ done
 ./ldms-agg/run.sh --name agg-22 --prdcr "agg-{13,14}" --strgp "meminfo vmstat"
 
 ./ldms-ui/run.sh --name ui --dsosd "agg-{21,22}"
+
+./grafana/run.sh
