@@ -55,19 +55,19 @@ INSTALLED_APPS = (
 )
 
 try:
-    import ldms_settings
+    from . import ldms_settings
     INSTALLED_APPS = INSTALLED_APPS + ldms_settings.INSTALLED_APPS
 except:
     pass
 
 try:
-    import grafana_settings
+    from . import grafana_settings
     INSTALLED_APPS = INSTALLED_APPS + grafana_settings.INSTALLED_APPS
 except:
     pass
 
 try:
-    import baler_settings
+    from . import baler_settings
     INSTALLED_APPS = INSTALLED_APPS + baler_settings.INSTALLED_APPS
 except:
     pass
@@ -150,7 +150,8 @@ STATICFILES_DIRS = [
 ]
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SOS_ROOT = "/store"
+SOS_ROOT = "/store/"
+DSOS_ROOT = "/store/"
 DSOS_CONF = "/opt/ovis/etc/dsosd.conf"
 LOG_FILE = "/var/log/sosgui/sosgui.log"
 LOG_DATE_FMT = "%F %T"
