@@ -8,7 +8,7 @@ SYNOPSIS
 	[--port LISTEN_PORT] [--samp "SAMPLER_PLUGIN_LIST"]
 	[--prdcr "PRDCR_LIST"] [--strgp "SCHEMA_LIST"]
 	[--store-path STORE_PATH] [--interval USEC] [--offset USEC]
-	[--name LDMSD_NAME]
+	[--name LDMSD_NAME] [--compid NUM]
 
 EXAMPLE
     # docker-run samp-01 container with vmstat and meminfo
@@ -73,6 +73,9 @@ LDMSD-CONF-OPTIONS
 
     --offset USEC   (default: 0)
         The "offset" option for sampler or updtr.
+
+    --compid NUM    (default: numbers in the \$NAME)
+        The value to supply to 'component_id' parameter for the sampler config.
 EOF
 )
 

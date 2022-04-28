@@ -8,7 +8,7 @@ SYNOPSIS
     ldmsd-conf [--port LISTEN_PORT] [--samp "SAMPLER_PLUGIN_LIST"]
 	       [--prdcr "PRDCR_LIST"] [--strgp "SCHEMA_LIST"]
 	       [--store-path STORE_PATH] [--interval USEC] [--offset USEC]
-	       [--name LDMSD_NAME]
+	       [--name LDMSD_NAME] [--compid NUM]
 
 EXAMPLES
     # for sampler
@@ -64,6 +64,8 @@ OPTIONS
     --offset USEC   (default: 0)
         The "offset" option for sampler or updtr.
 
+    --compid NUM    (default: numbers in the \$NAME)
+        The value to supply to 'component_id' parameter for the sampler config.
 EOF
 )
 
@@ -74,6 +76,7 @@ INTERVAL=1000000
 OFFSET=0
 PORT=411
 STORE_PATH="/store"
+COMPID=
 
 list_add() {
 	L=$1
@@ -136,6 +139,10 @@ while (($#)); do
 		shift
 		LDMSD_NAME=$1
 		;;
+	--compid|--component_id)
+		shift
+		COMPID=$1
+		;;
 	-h|-?)
 		cat <<<"$USAGE"
 		exit 0
@@ -153,6 +160,8 @@ INTERVAL=${INTERVAL:-1000000}
 OFFSET=${OFFSET:-200000}
 XPRT=sock
 LDMSD_NAME=${LDMSD_NAME:-\$\{HOSTNAME\}}
+
+[[ -n "$COMPID" ]] || COMPID=$( echo ${LDMSD_NAME} | sed 's/[^0-9]//g' )
 
 #var_inspect INTERVAL
 #var_inspect OFFSET
@@ -180,7 +189,7 @@ for SAMP in ${SAMPLER_PLUGIN_LIST[@]}; do
 	echo -ne "${L}"
 	cat <<-EOF
 	load name=${SAMP}
-	config name=${SAMP} producer=\${HOSTNAME} instance=\${HOSTNAME}/${SAMP}
+	config name=${SAMP} producer=\${HOSTNAME} instance=\${HOSTNAME}/${SAMP} component_id=${COMPID}
 	start name=${SAMP} interval=${INTERVAL} offset=${OFFSET}
 	EOF
 	L=""
