@@ -86,7 +86,7 @@ EOF
 . ${D}/../config.sh
 
 NAME=agg
-IMG=ldms-agg
+IMG=ovishpc/ldms-agg
 CONF=
 
 SAVED_ARGS=( )

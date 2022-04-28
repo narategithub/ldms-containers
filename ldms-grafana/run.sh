@@ -8,7 +8,7 @@ D=$(realpath $(dirname $0))
 cd ${D}
 
 NAME=grafana
-IMG=ldms-grafana
+IMG=ovishpc/ldms-grafana
 
 OPTIONS=(
 	-d --rm -p 3000:3000 --name ${NAME} --hostname ${NAME}

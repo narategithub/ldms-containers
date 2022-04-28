@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -t ldms-base .
+docker build -t ovishpc/ldms-base .

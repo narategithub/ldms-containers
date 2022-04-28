@@ -9,4 +9,4 @@ if [[ ! -d dsosds ]]; then
 	git clone https://github.com/nick-enoent/dsosds
 fi
 
-docker build -t ldms-grafana .
+docker build -t ovishpc/ldms-grafana .

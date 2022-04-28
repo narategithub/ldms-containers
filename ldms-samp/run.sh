@@ -82,7 +82,7 @@ EOF
 . ${D}/../config.sh
 
 NAME=samp
-IMG=ldms-samp
+IMG=ovishpc/ldms-samp
 CONF=
 VOL_OPTS=( )
 SAMP_OPTS=( )

@@ -1,6 +1,6 @@
 # SYNOPSIS
 #     docker build -t ovis-centos-build -f Dockerfile
-FROM ldms-base
+FROM ovishpc/ldms-base
 
 SHELL [ "/bin/bash", "-c" ]
 

@@ -1,5 +1,3 @@
-# SYNOPSIS
-#     docker build -t ldms-base .
 FROM centos:7
 
 # Informative prompt

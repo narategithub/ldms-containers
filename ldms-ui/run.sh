@@ -33,7 +33,7 @@ EOF
 . ${D}/../config.sh
 
 NAME=ui
-IMG=ldms-ui
+IMG=ovishpc/ldms-ui
 VOL_OPTS=( )
 # VOLUMES may be defined in config.sh
 [[ "${#VOLUMES[@]}" -gt 0 ]] || VOLUMES=( )

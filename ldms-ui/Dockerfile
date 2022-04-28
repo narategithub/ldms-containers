@@ -1,4 +1,4 @@
-FROM ldms-agg
+FROM ovishpc/ldms-agg
 
 SHELL [ "/bin/bash", "-c" ]
 

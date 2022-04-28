@@ -14,4 +14,4 @@ done
 
 ./ldms-ui/run.sh --name ui --dsosd "agg-{21,22}"
 
-./grafana/run.sh
+./ldms-grafana/run.sh
