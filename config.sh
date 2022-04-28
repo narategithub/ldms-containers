@@ -15,10 +15,14 @@ VOLUMES=(
 	# in docker-run
 )
 
-# List of sampler plugins to feed to ldmsd-conf script. Please note that if
-# SAMPLER_CONF_FILE is specified, ldmsd-conf won't be used to generate ldmsd
-# configuration for the sampler containers.
+# Bash array containing sampler plugins to feed to ldmsd-conf script. Please
+# note that if SAMPLER_CONF_FILE is specified, ldmsd-conf won't be used to
+# generate ldmsd configuration for the sampler containers.
 SAMPLER_PLUGIN_LIST=( vmstat meminfo )
+
+# Bash array of schemas to be stored. This is usually the same as
+# SAMPLER_PLUGIN_LIST.
+STRGP_SCHEMA_LIST=( "${SAMPLER_PLUGIN_LIST[@]}" )
 
 #### build options ####
 

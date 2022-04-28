@@ -112,6 +112,15 @@ while (( $# )); do
 		shift
 		CONF="${1}"
 		;;
+	--volume=* )
+		# do not save arg for ldmsd-conf
+		VOLUMES+=( "${1#--volume=}" )
+		;;
+	--volume|-v )
+		# do not save arg for ldmsd-conf
+		shift
+		VOLUMES+=( "$1" )
+		;;
 	-h|--help )
 		cat <<<"$USAGE"
 		exit 0
@@ -136,8 +145,13 @@ for V in "${VOLUMES[@]}"; do
 	VOL_OPTS+=( "-v" "$V" )
 done
 
+STRGP_OPTS=( )
+for S in "${STRGP_SCHEMA_LIST[@]}"; do
+	STRGP_OPTS+=( --strgp "${S}" )
+done
+
 docker run -d --rm --name=${NAME} --hostname=${NAME} \
 	--network=${NET} \
 	"${VOL_OPTS[@]}" \
 	"${OPT_CAPADDS[@]}" \
-	${IMG} "$@"
+	${IMG} "${STRGP_OPTS[@]}" "$@"

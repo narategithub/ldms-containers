@@ -91,6 +91,12 @@ var_inspect() {
 	eval "for X in \"\${${NAME}[@]}\"; do echo \"   \" \$X; done"
 }
 
+sort_uniq() {
+	local X
+	for X in "$@"; do
+		echo "$X";
+	done | sort | uniq
+}
 
 #### Parse CLI options ####
 
@@ -185,6 +191,7 @@ fi
 
 #### sampler plugin ####
 L="\n"
+SAMPLER_PLUGIN_LIST=( $(sort_uniq "${SAMPLER_PLUGIN_LIST[@]}") )
 for SAMP in ${SAMPLER_PLUGIN_LIST[@]}; do
 	echo -ne "${L}"
 	cat <<-EOF
@@ -197,6 +204,7 @@ done
 
 #### PRDCR ####
 L="\n"
+PRDCR_LIST=( $(sort_uniq "${PRDCR_LIST[@]}") )
 for PRDCR in ${PRDCR_LIST[@]}; do
 	if [[ "$P" == *:* ]]; then
 		H=${PRDCR%%:*}
@@ -214,6 +222,7 @@ done
 
 #### STRGP ####
 L="\n"
+STRGP_SCHEMA_LIST=( $(sort_uniq "${STRGP_SCHEMA_LIST[@]}") )
 for SCHEMA in ${STRGP_SCHEMA_LIST[@]}; do
 	STRGP="strgp_${SCHEMA}"
 	echo -ne "${L}"
