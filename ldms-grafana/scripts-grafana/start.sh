@@ -7,19 +7,25 @@ LOG() {
 # invoke grafana run script
 /run.sh >/var/log/grafana/run.log 2>&1 &
 
+SOCK=/sock/grafana.sock
+
 {
 while true; do
 	sleep 1
-	S=$( curl -S -L http://localhost:3000/api/datasources --user admin:admin )
+
+	[[ -S ${SOCK} ]] || continue # socket not created yet
+	chmod 666 ${SOCK}
+
+	S=$( curl -S --unix-socket ${SOCK} http://localhost/api/datasources --user admin:admin )
 	(( $? == 0 )) || continue # not ready
 
 	# Seems to be ready
 	LOG "Grafana seems to be ready, available datasources: ${S}"
 	LOG "Adding LDMS datasource"
-	curl -S -X "POST" http://localhost:3000/api/datasources \
+	curl -S -X "POST" --unix-socket ${SOCK} http://localhost/api/datasources \
 	     -H "Content-Type: application/json" \
 	     --user admin:admin --data-binary @/docker/datasources.json
-	S=$( curl -S -L http://localhost:3000/api/datasources --user admin:admin )
+	S=$( curl -S --unix-socket ${SOCK} http://localhost/api/datasources --user admin:admin )
 	LOG "current datasources: ${S}"
 	break
 done

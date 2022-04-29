@@ -7,7 +7,7 @@
     "typeName": "Sos",
     "typeLogoUrl": "public/plugins/sosds/img/ogc_logo.png",
     "access": "proxy",
-    "url": "http://ui/grafana/query",
+    "url": "http://ui/grafana/",
     "password": "",
     "user": "",
     "database": "",
