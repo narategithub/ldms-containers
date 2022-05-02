@@ -84,6 +84,7 @@ PORT=411
 STORE_PATH="/store"
 COMPID=
 STRGP_CONF=
+MEM=16M
 
 list_add() {
 	L=$1
@@ -156,6 +157,10 @@ while (($#)); do
 		shift
 		LDMSD_NAME=$1
 		;;
+	--mem)
+		shift
+		MEM=$1
+		;;
 	--compid|--component_id)
 		shift
 		COMPID=$1
@@ -188,6 +193,7 @@ LDMSD_NAME=${LDMSD_NAME:-\$\{HOSTNAME\}}
 
 cat <<EOF
 option -n ${LDMSD_NAME}
+option -m ${MEM}
 listen port=${PORT} xprt=${XPRT}
 EOF
 
@@ -217,7 +223,7 @@ done
 L="\n"
 PRDCR_LIST=( $(sort_uniq "${PRDCR_LIST[@]}") )
 for PRDCR in ${PRDCR_LIST[@]}; do
-	if [[ "$P" == *:* ]]; then
+	if [[ "$PRDCR" == *:* ]]; then
 		H=${PRDCR%%:*}
 		P=${PRDCR#*:}
 	else
