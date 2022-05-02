@@ -7,8 +7,9 @@ NAME
 SYNOPSIS
     ldmsd-conf [--port LISTEN_PORT] [--samp "SAMPLER_PLUGIN_LIST"]
 	       [--prdcr "PRDCR_LIST"] [--strgp "SCHEMA_LIST"]
-	       [--store-path STORE_PATH] [--interval USEC] [--offset USEC]
-	       [--name LDMSD_NAME] [--compid NUM]
+	       [--strgp-conf CONF_FILE] [--store-path STORE_PATH]
+	       [--interval USEC] [--offset USEC] [--name LDMSD_NAME]
+	       [--compid NUM]
 
 EXAMPLES
     # for sampler
@@ -54,6 +55,11 @@ OPTIONS
 	Expansion" for more info). The option can be specified multiple times.
 	In such case, the lists will be concatinated together.
 
+    --strgp-conf CONF_FILE  (default: EMPTY)
+	The extra storages and storage policies configuration. If the file is
+	specified, the content of the file will be appended to the STRGP section
+	of the output.
+
     --store-path STORE_PATH   (default: "/store")
 	The 'path' option to store_sos plugin. Note that if the strgp
 	SCHEMA_LIST is empty, store_sos won't be loaded.
@@ -77,6 +83,7 @@ OFFSET=0
 PORT=411
 STORE_PATH="/store"
 COMPID=
+STRGP_CONF=
 
 list_add() {
 	L=$1
@@ -128,6 +135,10 @@ while (($#)); do
 	--strgp)
 		shift
 		list_add STRGP_SCHEMA_LIST $1
+		;;
+	--strgp-conf)
+		shift
+		STRGP_CONF=$1
 		;;
 	--store-path|--path)
 		shift
@@ -233,6 +244,10 @@ for SCHEMA in ${STRGP_SCHEMA_LIST[@]}; do
 	EOF
 	L=""
 done
+
+if [[ -f "${STRGP_CONF}" ]]; then
+	cat "${STRGP_CONF}"
+fi
 
 #### UPDTR ####
 if [[ "${#PRDCR_LIST[@]}" -gt 0 ]]; then
