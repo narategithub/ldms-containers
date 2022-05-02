@@ -9,7 +9,7 @@ SYNOPSIS
 	       [--prdcr "PRDCR_LIST"] [--strgp "SCHEMA_LIST"]
 	       [--strgp-conf CONF_FILE] [--store-path STORE_PATH]
 	       [--interval USEC] [--offset USEC] [--name LDMSD_NAME]
-	       [--compid NUM]
+	       [--compid NUM] [--mem MEM_SZ]
 
 EXAMPLES
     # for sampler
@@ -72,6 +72,9 @@ OPTIONS
 
     --compid NUM    (default: numbers in the \$NAME)
         The value to supply to 'component_id' parameter for the sampler config.
+
+    --mem MEM_SZ  (default: empty)
+	The size of the memory pool for LDMS set (e.g. 2G).
 EOF
 )
 
@@ -84,7 +87,7 @@ PORT=411
 STORE_PATH="/store"
 COMPID=
 STRGP_CONF=
-MEM=16M
+MEM=
 
 list_add() {
 	L=$1
@@ -193,7 +196,7 @@ LDMSD_NAME=${LDMSD_NAME:-\$\{HOSTNAME\}}
 
 cat <<EOF
 option -n ${LDMSD_NAME}
-option -m ${MEM}
+$( [[ -z "${MEM}" ]] || echo "option -m ${MEM}" )
 listen port=${PORT} xprt=${XPRT}
 EOF
 

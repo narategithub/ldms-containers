@@ -22,8 +22,16 @@ SAMPLER_PLUGIN_LIST=( meminfo loadavg procstat)
 
 #### build options ####
 
+# The location of OVIS repository. The default is "https://github.com/ovis-hpc/ovis"
+#OVIS_REPO="https://github.com/ovis-hpc/ovis"
+OVIS_REPO="https://github.com/narategithub/ovis"
+
 # Revision of OVIS to build; if not set, `OVIS-4` is the default
 #OVIS_REV=OVIS-4
+OVIS_REV=fix_store_csv
+
+# The location of SOS repository. The default is "https://github.com/ovis-hpc/sos"
+#SOS_REPO="https://github.com/ovis-hpc/sos"
 
 # Revision of SOS to build; if not set, `SOS-5` is the default
 #SOS_REV=SOS-5

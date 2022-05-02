@@ -6,9 +6,12 @@
 set -e
 
 D=$(dirname $0)
+. ${D}/../config.sh
 IMG=ovishpc/ovis-centos-build
 OVIS_REV=${OVIS_REV:-OVIS-4}
+OVIS_REPO=${OVIS_REPO:-https://github.com/ovis-hpc/ovis}
 SOS_REV=${SOS_REV:-SOS-5}
+SOS_REPO=${SOS_REPO:-https://github.com/ovis-hpc/sos}
 ODIR=${D}/ovis
 
 if [[ -d ${ODIR} ]]; then
@@ -47,7 +50,7 @@ cd ~
 mkdir sos
 pushd sos
 git init .
-git remote add github https://github.com/ovis-hpc/sos
+git remote add github ${SOS_REPO}
 git fetch github ${SOS_REV}
 git checkout FETCH_HEAD
 ./autogen.sh
@@ -62,7 +65,7 @@ popd
 mkdir ovis
 pushd ovis
 git init .
-git remote add github https://github.com/ovis-hpc/ovis
+git remote add github ${OVIS_REPO}
 git fetch github ${OVIS_REV}
 git checkout FETCH_HEAD
 ./autogen.sh
