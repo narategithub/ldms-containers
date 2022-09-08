@@ -14,7 +14,7 @@ NET=test
 XPRT=sock
 PORT=411
 
-docker run -d --name ${NAME} --hostname ${NAME} --network ${NET} ${IMG}
+docker run -d --name ${NAME} --hostname ${NAME} --network ${NET} ${IMG} -x sock:411
 
 # Limited wait for State.Running == true
 for ((I=0; I<5; I++)); do

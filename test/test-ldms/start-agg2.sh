@@ -21,7 +21,7 @@ mkdir -p store
 
 docker run -d --name ${NAME} --hostname ${NAME} \
 	-v ${PWD}/store:/store:rw \
-	--network ${NET} ${IMG}
+	--network ${NET} ${IMG} -x sock:411
 
 # Limited wait for State.Running == true
 for ((I=0; I<5; I++)); do
