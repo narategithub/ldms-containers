@@ -300,6 +300,7 @@ apt-get install -y man-db git build-essential python3-dev python3-pip etcd \
 	exuberant-ctags \
 	librdmacm-dev \
 	gdb dnsutils iproute2 inetutils-ping \
+	npm \
 	; \
 ln -s /usr/bin/cython3 /usr/bin/cython ; \
 apt-get autoremove -y; \

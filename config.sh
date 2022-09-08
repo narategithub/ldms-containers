@@ -96,3 +96,10 @@ SOSDBUI_OPTIONS=()
 SOSDBGRAFANA_REPO=https://github.com/nick-enoent/sosdb-grafana
 SOSDBGRAFANA_BRANCH=e5eb534
 SOSDBGRAFANA_OPTIONS=()
+
+# ---- dsos data source grafana plugin ---- #
+DSOSDS=dsosds # the dsosds build dir relative to the top dir
+DSOSDS_REPO=https://github.com/narategithub/dsosds
+DSOSDS_BRANCH=1910e9a6d832b2114ab4421bbb61ea4de95b004d
+DSOSDS_BUILD_CONT=dsosds-build
+DSOSDS_BUILD_IMG=ovishpc/ldms-dev
