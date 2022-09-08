@@ -19,7 +19,8 @@ building Docker Images of various components in LDMS, namely:
   - `ovishpc/ldms-grafana`: an image containing `grafana` and the SOS
       data source plugin for grafana ([sosds](https://github.com/nick-enoent/dsosds))
 
-Sections:
+Table of Contents:
+- [Brief Overview About Docker Containers](#brief-overview-about-docker-containers)
 - [Sites WITHOUT internet access](#sites-without-internet-access)
 - [SYNOPSIS](#SYNOPSIS)
 - [EXAMPLES](#EXAMPLES)
@@ -30,6 +31,46 @@ Sections:
 - [LDMS-Grafana Container](#ldms-grafana-container)
 - [SSH port forwarding to grafana](#ssh-port-forwarding-to-grafana)
 - [Building Containers](#building-containers)
+
+
+Brief Overview About Docker Containers
+--------------------------------------
+A docker container is a runnable instance of an image. In Linux, it is
+implemented using namespaces ([namespaces(7)](https://man7.org/linux/man-pages/man7/namespaces.7.html)).
+`docker create` command creates a container that can later be started with
+`docker start`, while `docker run` creates and starts the container in one go.
+When a container starts, the first process being run, or a root process, is the
+program specified by the `--entrypoint` CLI option or `ENTRYPOINT` Dockerfile
+directive. When the root process exits or is killed, the container status
+becomes `exited`. `docker stop` command sends `SIGTERM` to the root process, and
+`docker kill` command send `SIGKILL` to the root process. The other processes in
+the container are also terminated or killed when the root process is terminated
+or killed. `docker ps` shows "running" containers, while `docker ps -a` shows
+ALL containers (including the exited one).
+
+When a container is created (before started), its mount namespace
+([mount_namespaces(7)](https://man7.org/linux/man-pages/man7/mount_namespaces.7.html))
+is prepared by the Docker engine. This isolates container's filesystems from the
+host. The Docker Image is the basis of the filesystem mounted in the container.
+The image itself is read-only, and the modification to the files/directories
+inside the container at runtime is done on the writable layer on top of the
+image. They are "unified" and presented to the container as a single filesystem
+by OverlayFS (most preferred by Docker, but other drivers like `btrfs` could
+also be used). A Docker Image is actually a collection of "layers" of root
+directories (`/`). When a container is `stopped` (the root process
+exited/killed), the writable top layer still persists until `docker rm` command
+removes the container.
+
+The network namespace ([network_namespace](https://man7.org/linux/man-pages/man7/network_namespaces.7.html))
+and the process namespace ([process namespace](https://man7.org/linux/man-pages/man7/process_namespaces.7.html))
+of a container are normally isolated, but could also
+use host's namespaces. The LDMS sampler containers (`ovishpc/ldms-samp`) require
+host process namespace (`--pid=host` option) so that the `ldmsd` reads host's
+`/proc` data. Otherwise, we will be collecting container's metric data. Other
+LDMS containers do not need host process namespace. For the network namespace,
+it is advisable to use host's network namespace (`--network=host`) to fully
+utilize RDMA hardware on the host with minimal effort in network configuration.
+
 
 Sites WITHOUT internet access
 -----------------------------
@@ -67,8 +108,8 @@ Then, the images are available locally (no need to `docker pull`).
 
 SYNOPSIS
 --------
-In this section, the options in `[ ]` is optional. Please see the `#` comments
-right after the options for the description. Please also note that the options
+In this section, the options in `[ ]` are optional. Please see the `#` comments
+right after the options for the descriptions. Please also note that the options
 BEFORE the Docker Image name are for `docker run`, and the options AFTER the
 image name are for the entrypoint script. The following is the information
 regarding entrypoint options for each image:
