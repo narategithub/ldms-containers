@@ -47,8 +47,8 @@ _ERROR_EXIT() {
 
 # Parameters
 DSOSDS=${DSOSDS:-}
-DSOSDS_REPO=${DSOSDS_REPO:-https://github.com/nick-enoent/dsosds}
-DSOSDS_BRANCH=${DSOSDS_BRANCH:-build_fixes}
+DSOSDS_REPO=${DSOSDS_REPO:-}
+DSOSDS_BRANCH=${DSOSDS_BRANCH:-}
 DSOSDS_BUILD_CONT=${DSOSDS_BUILD_CONT:-dsosds-build}
 DSOSDS_BUILD_IMG=${DSOSDS_BUILD_IMG:-ovishpc/ldms-dev}
 DEBUG=
@@ -103,6 +103,11 @@ while (($#)); do
 	esac
 	shift
 done
+
+if [[ -z "${DSOSDS_REPO}" ]]; then
+	_INFO "DSOSDS_REPO is not specified .. skip dsosds build"
+	exit 0
+fi
 
 [[ -n "${DSOSDS}" ]] || _ERROR_EXIT "'-o DSOSDS' option is required"
 mkdir -p "${DSOSDS}"

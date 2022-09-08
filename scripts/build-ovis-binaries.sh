@@ -159,22 +159,22 @@ mkdir -p ovis sos maestro
 pushd ovis
 git init .
 git remote add origin ${OVIS_REPO}
-git fetch origin
-git checkout ${OVIS_BRANCH}
+git fetch origin ${OVIS_BRANCH}
+git checkout -b build FETCH_HEAD
 popd # ovis
 
 pushd sos
 git init .
 git remote add origin ${SOS_REPO}
-git fetch origin
-git checkout ${SOS_BRANCH}
+git fetch origin ${SOS_BRANCH}
+git checkout -b build FETCH_HEAD
 popd # sos
 
 pushd maestro
 git init .
 git remote add origin ${MAESTRO_REPO}
-git fetch origin
-git checkout ${MAESTRO_BRANCH}
+git fetch origin ${MAESTRO_BRANCH}
+git checkout -b build FETCH_HEAD
 popd # maestro
 
 echo "========== maestro ======================================================"
@@ -219,8 +219,8 @@ echo "========== numsos ======================================================="
   pushd numsos
   git init .
   git remote add origin ${NUMSOS_REPO}
-  git fetch origin
-  git checkout ${NUMSOS_BRANCH}
+  git fetch origin ${NUMSOS_BRANCH}
+  git checkout -b build FETCH_HEAD
   ./autogen.sh
   mkdir -p build
   pushd build
@@ -238,8 +238,8 @@ echo "========== sosdb-ui ====================================================="
   pushd sosdb-ui
   git init .
   git remote add origin ${SOSDBUI_REPO}
-  git fetch origin
-  git checkout ${SOSDBUI_BRANCH}
+  git fetch origin ${SOSDBUI_BRANCH}
+  git checkout -b build FETCH_HEAD
   ./autogen.sh
   mkdir -p build
   pushd build
@@ -257,8 +257,8 @@ echo "========== sosdb-grafana ================================================"
   pushd sosdb-grafana
   git init .
   git remote add origin ${SOSDBGRAFANA_REPO}
-  git fetch origin
-  git checkout ${SOSDBGRAFANA_BRANCH}
+  git fetch origin ${SOSDBGRAFANA_BRANCH}
+  git checkout -b build FETCH_HEAD
   ./autogen.sh
   mkdir -p build
   pushd build
