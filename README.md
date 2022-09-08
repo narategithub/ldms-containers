@@ -532,7 +532,15 @@ Then, you should be able to access the grafana web server via
 
 Building Containers
 -------------------
-In short, edit [config.sh](config.sh), customize the `*_REPO`, `*_BRANCH` and
+TL;DR: edit [config.sh](config.sh), customize the `*_REPO`, `*_BRANCH` and
 `*_OPTIONS`, then run `./scripts/build-all.sh`.
 
-The loger version ... [TODO]
+The following steps describe the building process executed by the
+[scripts/build-all.sh](scripts/build-all.sh) script:
+
+1. Build `ovishpc/ldms-dev` docker image. This "development" image contains
+   development programs and libraries for building `/opt/ovis` binaries and
+   `dsosds`.
+   - See [recipes/ldms-dev/docker-build.sh](recipe/ldms-dev/docker-build.sh)
+       and [recipes/ldms-dev/Dockerfile](recipes/ldms-dev/Dockerfile)
+2. Build `/opt/ovis`
