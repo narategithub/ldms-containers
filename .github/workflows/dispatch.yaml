@@ -1,0 +1,13 @@
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "The version of LDMS"
+        default: "4.4.4"
+        required: False
+        type: string
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{inputs.version}}"
