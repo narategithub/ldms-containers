@@ -86,6 +86,9 @@ zypper install --force -y $( rpm -qa | grep -v gpg-pubkey- ) ; \
 #
 RUN /bin/bash -c 'zypper install -y --type pattern devel_C_C++'
 
+# readline-devel & ncurse-devel installation w/ conflict resolution
+RUN zypper install -y --force-resolution readline-devel
+
 # packages
 RUN /bin/bash -c ' \
 zypper install -y \
@@ -98,7 +101,6 @@ zypper install -y \
 	libuuid-devel \
 	papi papi-devel \
 	libpfm-devel \
-	readline-devel \
 	krb5-devel \
 	python3-numpy \
 	python3-Cython \
