@@ -100,8 +100,14 @@ git fetch origin ${LDMS_BRANCH}
 git checkout -b build FETCH_HEAD
 git config user.name 'root'
 git config user.email 'root@localhost'
-# retag v4.5.0 as annotated tag
-git tag -f -a -m 'v4.5.0' v4.5.0 v4.5.0
+
+# annotated tag 'main' b/c configure script uses annotated tag for LDMS Version.
+# This added tag only be used for building 'main'.
+[[ "${LDMS_BRANCH}" != "main" ]] || {
+	MAIN_TAG=$( git show -s --format=4.6.0-%h main )
+	git tag -f -a -m ${MAIN_TAG} main ${MAIN_TAG}
+}
+
 popd # ldms
 
 pushd sos
