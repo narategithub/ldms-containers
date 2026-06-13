@@ -106,6 +106,9 @@ target "ldms-dev" {
   inherits = [ "_common" ]
   context = "buildx/ldms-dev"
   tags = [ "ovishpc/ldms-dev:${TAG}-${ARCH}" ]
+  contexts = {
+    base = "target:ldms-dev-ubuntu-2404"
+  }
 }
 
 target "ldms-dev-ubuntu-2204" {
@@ -152,7 +155,7 @@ target "ldms-build" {
   context = "buildx/ldms-build"
   tags = [ "ovishpc/ldms-build:${TAG}-${ARCH}" ]
   contexts = {
-    dev = "target:ldms-dev"
+    dev = "target:ldms-dev-ubuntu-2404"
   }
   args = {
     BUILD_TIME          = "${BUILD_TIME}"
