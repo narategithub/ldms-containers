@@ -181,6 +181,6 @@ mkdir -p /run/sshd ; \
 RUN /bin/bash -c '\
 cd /root ; \
 yes "" | ssh-keygen ; \
-cp .ssh/id_rsa.pub .ssh/authorized_keys ; \
+cp .ssh/id_*.pub .ssh/authorized_keys ; \
 chmod 600 .ssh/authorized_keys ; \
 '
